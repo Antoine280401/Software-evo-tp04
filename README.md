@@ -28,7 +28,7 @@ TP04 of Sofware evolution course
 2. The checksums are different. This is because the code uses the __DATE__ and __TIME__ macros. Theses are specific to the date and the time when compiled. The file that is build time reproductible is called montecarlo_build_repro.c.  
 
 Source Code of the monte carlo estimate (reproductible run and build version )
-```
+```C
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -81,7 +81,7 @@ This ensures the other student can reproduce your exact environment because it i
 8. The project remains reproducible because of the flake.lock file. It locks the dependencies to a specific revision, meaning Nix will ignore unexpected upstream updates and continue using the exact versions specified in the lockfile
 9. Yes, I would absolutely share the flake.lock file along with the flake.nix file to guarantee the environment is consistent across the teammates  
 Example of minimal flake.nix : 
-```
+```Nix
 {
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
