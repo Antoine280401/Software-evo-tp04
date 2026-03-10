@@ -25,7 +25,33 @@ TP04 of Sofware evolution course
 
 # Section 2.6.1
 1. Increasing $n$ improves the accuracy of the $\pi$ estimate as it converges towards $3.14159$. The execution time increases linearly O(n) because the workload grows proportionally with the number of iterations. This behavior is consistent with expectations for a Monte Carlo simulation, where higher precision requires more computation.
-2. The checksums are different. This is because the code uses the __DATE__ and __TIME__ macros. Theses are specific to the date and the time when compiled. The file that is build time reproductible is called montecarlo_build_repro.c. 
+2. The checksums are different. This is because the code uses the __DATE__ and __TIME__ macros. Theses are specific to the date and the time when compiled. The file that is build time reproductible is called montecarlo_build_repro.c.  
+
+Source Code of the monte carlo estimate (reproductible run and build version )
+```
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main(int argc, char* argv[]) {
+    double x, y, z;
+    int count = 0;
+    time_t started = time(NULL);
+    
+    srand(42); 
+    int n = 10000; 
+
+    for (int i = 0; i < n; i++) {
+        x = (double) rand() / RAND_MAX;
+        y = (double) rand() / RAND_MAX;
+        z = x * x + y * y;
+        if (z <= 1) count++;
+    }
+
+    printf("The approximation of Pi using %d iterations is %f \n", n, (count / (double) n) * 4);
+    return 0;
+}
+```
 
 # Section 3.3.1
 1. The number of parameters remains at 2 because if they are hard coded, the code will be reproducible at buildtime and at runtime. 
