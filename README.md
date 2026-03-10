@@ -24,4 +24,5 @@ TP04 of Sofware evolution course
 2. Yes we have a different number because the seed is the current timestamp, so if we dont execute at the same second, then the generated number is different. So the seed changes at every second.
 
 # Section 2.6.1
-1. Accuracy: The estimate gets closer to $\pi$ ($3.1415...$). Larger samples reduce statistical error (Law of Large Numbers).Execution Time: It increases linearly ($O(n)$). Doubling the iterations roughly doubles the time spent in the loop.Consistency: Yes. It follows the expected behavior of a Monte Carlo simulation, where precision is gained at the cost of more computation.Note: With your current code ($n$ max 10,001), the time change is too small to notice. You'd need $n \geq 10^7$ to see a real delay.
+1. Increasing $n$ improves the accuracy of the $\pi$ estimate as it converges towards $3.14159$. The execution time increases linearly O(n) because the workload grows proportionally with the number of iterations. This behavior is consistent with expectations for a Monte Carlo simulation, where higher precision requires more computation.
+2. The checksums are different. This is because the code uses the __DATE__ and __TIME__ macros. Theses are specific to the date and the time when compiled. The file that is build time reproductible is called montecarlo_build_repro.c. 
