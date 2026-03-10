@@ -40,4 +40,37 @@ TP04 of Sofware evolution course
 6. Yes, if you we are using the same parameters hard coded, the result will be the same
 7. When you use save and load, you are transferring a tar archive containing the complete filesystem layers, configurations, and metadata of the image.
 This ensures the other student can reproduce your exact environment because it includes the specific OS binaries, libraries, and dependencies bundled during the build.
- 
+
+
+# Section 4.1.6
+1. Yes, if the architecture is the same, then the binary will be the same. 
+2. Yes, Nix stores output under a path containing a cryptographic hash of all builds inputs, the path installation /nix/store will be equal too.
+3. Yes, the output will be the same. Same inputs always produce the same bit-for-bit outputs.
+4. nix shell vs nix profile add  
+    1. nix shell creates a temporary, isolated shell session containing the package.
+    2. nix profile add installs the package permanently into your user profile
+5. The Nix store is a directory containing all installed packages and their dependencies. It is strictly immutable (read-only) to prevent accidental modifications and ensure all packages remain fully isolated from the underlying operating system
+6. The flake.lock file locks the input dependencies to a specific revision. This is critical for reproducibility because it guarantees future builds will use the exact same dependency versions across different machines
+7. The build would fail. Nix executes builds in an isolated sandbox where only explicitly declared dependencies are available. This restriction is necessary because traditional global states (like /etc/passwd or host timestamps) introduce variability that breaks reproducibility
+8. The project remains reproducible because of the flake.lock file. It locks the dependencies to a specific revision, meaning Nix will ignore unexpected upstream updates and continue using the exact versions specified in the lockfile
+9. Yes, I would absolutely share the flake.lock file along with the flake.nix file to guarantee the environment is consistent across the teammates  
+Example of minimal flake.nix : 
+```
+{
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+
+  outputs = inputs: {
+    devShells.x86_64-linux.default =
+      let
+        pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
+      in
+      pkgs.mkShell {
+        packages = [
+          pkgs.gcc
+          pkgs.jdk
+        ];
+      };
+  };
+}
+```
+
