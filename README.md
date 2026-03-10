@@ -100,3 +100,11 @@ Example of minimal flake.nix :
 }
 ```
 
+# Section 4.2
+1. Nix guarantees reproducibility at the build level by enforcing pure, isolated builds and immutable storage, where containers only focus on runtime reproducibility and can still contain unnecessary tooling or depend on host kernel. 
+2. It is not completely safe. Containers use isolation mechanisms like namespaces and cgroups, but they still share the host machine's kernel. A malicious image could exploit a kernel vulnerability to escape the container and compromise your system.
+3. The output is rarely perfectly reproducible. LLMs rely on probabilistic generation where parameters like "temperature" and "top-p" intentionally inject randomness.
+4. The application can be distributed by packaging the compiled binary inside a Docker or Podman container image.
+5. In LaTeX that should be interresting. 
+6. C'était intéressant comme TP. Je pense à mon avis qu'il faudrait réduire les parties sur local machine et docker, pour laisser plus de temps a Nix, qui est la notion la moins vue de notre cursus, étant donné que nous avons pour la plus part déja joué avec Docker et gcc. Nix étant le programme que nous connaissons le moins, il serait vraiment chouette d'avoir plus de temps pour l'appréhender. L'idée de faire des moments théorie / exercices est bonne, mais il serait chouette aussi de laisser un peu plus de temps pour répondre aux exercices, car c'était un peu court.  
+
