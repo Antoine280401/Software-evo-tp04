@@ -26,3 +26,18 @@ TP04 of Sofware evolution course
 # Section 2.6.1
 1. Increasing $n$ improves the accuracy of the $\pi$ estimate as it converges towards $3.14159$. The execution time increases linearly O(n) because the workload grows proportionally with the number of iterations. This behavior is consistent with expectations for a Monte Carlo simulation, where higher precision requires more computation.
 2. The checksums are different. This is because the code uses the __DATE__ and __TIME__ macros. Theses are specific to the date and the time when compiled. The file that is build time reproductible is called montecarlo_build_repro.c. 
+
+# Section 3.3.1
+1. The number of parameters remains at 2 because if they are hard coded, the code will be reproducible at buildtime and at runtime. 
+2. Listing 7 : 200 MB, Listing 8 : 10 MB. 
+  1. Listing 7 This image includes the entire build toolchain in the final layer. These tools are only needed to compile the code, not to run it. 
+  2. Listing 8 : This uses a Multi-stage build. The first stage (buildtime-stage) compiles the code, but the second stage (runtime-stage) starts from a fresh, tiny Alpine image and only copies the resulting binary.
+3. The difference exists because a Docker image is not just the binary; it is a complete, bootable file system.  
+   1. The local binary: This is just the compiled machine code. It relies on the host operating system's.
+   2. The docker image : Even though it uses a multi-stage build to stay "slim," it still includes the Alpine Linux base OS. 
+ The image is 500x larger because it bundles its own runtime environment. 
+4. The COPY --from instruction transfers only the compiled binary from the build stage to the final image. This is a best practice because it creates a much smaller and more secure container. By excluding the compiler and source code, you reduce the image size and minimize the attack surface, leaving only the essential files needed for execution.
+6. Yes, if you we are using the same parameters hard coded, the result will be the same
+7. When you use save and load, you are transferring a tar archive containing the complete filesystem layers, configurations, and metadata of the image.
+This ensures the other student can reproduce your exact environment because it includes the specific OS binaries, libraries, and dependencies bundled during the build.
+ 

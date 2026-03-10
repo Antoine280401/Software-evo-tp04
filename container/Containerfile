@@ -1,0 +1,9 @@
+FROM alpine AS buildtime-stage
+RUN apk add --no-cache build-base=0.5-r3
+WORKDIR /app
+COPY random.c .
+RUN gcc random.c -o random
+FROM alpine AS runtime-stage
+COPY --from=buildtime-stage /app/random /app/random
+WORKDIR /app
+ENTRYPOINT ["/app/random"]
